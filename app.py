@@ -185,13 +185,37 @@ def clean_items(text):
     cleaned_list = [item.strip().title() for item in text.split('|') if item.strip() and item.strip().lower() not in ["and", "or"]]
     return list(dict.fromkeys(cleaned_list)) # Hapus duplikat
 
+# def extract_diet_items(category, diet_string):
+#     """Mengekstrak item diet dari string per kategori pakai regex."""
+#     if not isinstance(diet_string, str): return []
+#     match = re.search(fr'{category}:\s*\(([^)]*)\)', diet_string, re.IGNORECASE)
+#     if match:
+#         item_string = match.group(1) # isinya "item1, item2, ..."
+#         return clean_items(item_string) # Kirim ke clean_items untuk di-split
+#     return []
+
+# GANTI FUNGSI INI DI app.py LU
 def extract_diet_items(category, diet_string):
-    """Mengekstrak item diet dari string per kategori pakai regex."""
+    """Mengekstrak item diet dari string per kategori (lebih toleran)."""
     if not isinstance(diet_string, str): return []
-    match = re.search(fr'{category}:\s*\(([^)]*)\)', diet_string, re.IGNORECASE)
+
+    # Pola regex: Cari "Category:" diikuti teks sampai semicolon atau akhir string
+    # (\([^)]*\))? menangkap isi dalam kurung jika ada, tapi opsional
+    category_pattern = category.replace(' Intake','') # Handle "Protein Intake" vs "Protein:"
+    match = re.search(fr'{category_pattern}:\s*(\([^)]*\))?(.*?)(?:;|$)', diet_string, re.IGNORECASE | re.DOTALL)
+
     if match:
-        item_string = match.group(1) # isinya "item1, item2, ..."
-        return clean_items(item_string) # Kirim ke clean_items untuk di-split
+        content_in_parentheses = match.group(1)
+        content_after_colon = match.group(2)
+
+        items_text = ""
+        if content_in_parentheses:
+            items_text = content_in_parentheses.strip("()")
+        elif content_after_colon:
+            items_text = content_after_colon.strip().split(';')[0]
+
+        if items_text:
+            return clean_items(items_text) # clean_items V4 harus ada
     return []
 
 def render_recommendation_section(title, items_list):
