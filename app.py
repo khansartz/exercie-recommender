@@ -141,9 +141,19 @@ with st.sidebar:
     age = st.number_input("Usia", 10, 100, 25, 1) 
     height_cm = st.number_input("Tinggi Badan (cm)", 100, 250, 170, 1) 
     weight = st.number_input("Berat Badan (kg)", 30, 200, 70, 1) 
-    sex = st.selectbox("Jenis Kelamin", ["Male", "Female"]) 
-    hypertension = st.selectbox("Riwayat Hipertensi", ["No", "Yes"]) 
-    diabetes = st.selectbox("Riwayat Diabetes", ["No", "Yes"]) 
+
+    # Opsi Tampilan Bahasa Indonesia
+    sex_options = ["Laki-laki", "Perempuan"]
+    yes_no_options = ["Tidak", "Ada"]
+
+    # Pake label dan opsi Bahasa Indonesia
+    sex_display = st.selectbox("Jenis Kelamin", sex_options) 
+    hypertension_display = st.selectbox("Riwayat Hipertensi", yes_no_options) 
+    diabetes_display = st.selectbox("Riwayat Diabetes", yes_no_options)
+
+    # sex = st.selectbox("Jenis Kelamin", ["Male", "Female"]) 
+    # hypertension = st.selectbox("Riwayat Hipertensi", ["No", "Yes"]) 
+    # diabetes = st.selectbox("Riwayat Diabetes", ["No", "Yes"]) 
     
     submit = st.button("Dapatkan Rekomendasi") 
     if st.session_state["recommendation_data"] is not None and st.button("🧼 Reset Data"): 
@@ -305,28 +315,34 @@ if "detail" in st.query_params:
 # Logika Saat Tombol "Dapatkan Rekomendasi" Ditekan
 
 if submit:
-    with st.spinner("Mencari rekomendasi terbaik..."):  
-        # Kalkulasi Turunan (BMI, Level, Goal)
+    # Terjemahkan Jenis Kelamin
+    sex = "Male" if sex_display == "Laki-laki" else "Female"
+    # Terjemahkan Riwayat Penyakit
+    hypertension = "Yes" if hypertension_display == "Ada" else "No"
+    diabetes = "Yes" if diabetes_display == "Ada" else "No"
+
+    with st.spinner("Mencari rekomendasi terbaik..."): 
+        # Kalkulasi Turunan (BMI, Level, Goal) 
         bmi = calculate_bmi(height_cm, weight)
         level = get_bmi_level(bmi)
         goal = get_fitness_goal(level)
-        
-        # Siapkan input lengkap untuk model KNN
+
+        # Siapkan input LENGKAP untuk model KNN 
         knn_input = {"Sex": sex, "Age": age, "Height": height_cm, "Weight": weight, "BMI": bmi, "Level": level, "Fitness Goal": goal}
-        
+
         # Prediksi Tipe Fitness (KNN)
         pred_label = "Error"
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=UserWarning)
             warnings.simplefilter("ignore", category=FutureWarning)
             pred_label = knn_predict_fitness(knn_input, le_dict, scaler, knn, le_target)
-        
-        if "Error" in pred_label: st.error(f"Prediksi KNN Gagal: {pred_label}")  
+
+        if "Error" in pred_label: st.error(f"Prediksi KNN Gagal: {pred_label}") 
         else:
-            # Dapatkan Rekomendasi Detail (CBF)
+            # Dapatkan Rekomendasi Detail (CBF) 
             cbf_result = cbf_recommendations(fitness_type=pred_label, hypertension=hypertension, diabetes=diabetes, top_n=5)
-            
-            if "Error" in cbf_result: st.error(f"Rekomendasi CBF Gagal: {cbf_result['Error']}")  
+
+            if "Error" in cbf_result: st.error(f"Rekomendasi CBF Gagal: {cbf_result['Error']}") 
             else:
                 # Simpan hasil rekomendasi ke session state
                 st.session_state["recommendation_data"] = {"pred_label": pred_label, "level": level, "goal": goal, "bmi": bmi, "best_row": cbf_result}
@@ -334,7 +350,7 @@ if submit:
                 st.rerun() # Muat ulang halaman untuk menampilkan hasil
 
 
-# Tampilan Hasil Rekomendasi ATAU Info Awal 
+# Tampilan Hasil Rekomendasi atau Info Awal 
 
 # Cek apakah ada rekomendasi di session state
 if st.session_state["recommendation_data"] is not None:
