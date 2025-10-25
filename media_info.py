@@ -65,6 +65,16 @@ def get_media_info():
             ],
             "youtube": "https://youtu.be/tVpUCkMLgms?si=lxJzPqeFJIXoalID"
         },
+        "walking": {
+            "description": "Berjalan adalah latihan kardio low-impact yang baik untuk kesehatan jantung, pembakaran kalori, dan peningkatan stamina.",
+            "tips": [
+                "Jaga postur tegap, bahu rileks, pandangan lurus ke depan.",
+                "Ayunkan lengan secara alami dari bahu (tekuk siku sekitar 90 derajat) untuk menambah momentum.",
+                "Langkahkan kaki dari tumit ke jari kaki.",
+                "Pertahankan kecepatan yang membuat Anda sedikit terengah-engah tapi masih bisa berbicara."
+            ],
+            "youtube": "https://youtu.be/AdqrTg_hpEQ?si=wE_xU2CKXqp4snrc"
+        },       
         "cycling": {
             "description": "Bersepeda (baik di luar ruangan atau stasioner) adalah latihan kardio yang sangat baik yang berfokus pada kaki dan kesehatan kardiovaskular.",
             "tips": [

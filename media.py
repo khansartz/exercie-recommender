@@ -17,6 +17,7 @@ def get_media_dict():
         "running": os.path.join(base_path, "running.jpg"),
         "swimming": os.path.join(base_path, "swimming.jpg"),
         "dancing": os.path.join(base_path, "dancing.jpg"),
+        "walking": os.path.join(base_path, "walking.jpg"),
 
         # Equipment
         "dumbbells": os.path.join(base_path, "dumbbells.jpg"),
