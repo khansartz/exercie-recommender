@@ -25,11 +25,11 @@ st.set_page_config(
 # Muat Model & Aset
 # ------------------------
 try:
-    knn = joblib.load(r"models\knn_model.pkl")
-    le_dict = joblib.load(r"models\label_encoders.pkl")
-    le_target = joblib.load(r"models\target_encoder.pkl") # <-- Pake r""
-    scaler = joblib.load(r"models\scaler.pkl")
-    preparation = joblib.load(r"models\preparation_data.pkl")   
+    knn = joblib.load("models/knn_model.pkl")
+    le_dict = joblib.load("models/label_encoders.pkl")
+    le_target = joblib.load("models/target_encoder.pkl")
+    scaler = joblib.load("models/scaler.pkl")
+    preparation = joblib.load("models/preparation_data.pkl")
     
     # Asumsi 2 file ini ada di folder yg sama
     from media import get_media_dict
