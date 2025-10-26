@@ -29,7 +29,7 @@ FitPlan AI adalah aplikasi web yang dibangun dengan Streamlit untuk membantu pen
 
 ## 📁 Struktur Repositori
 
-
+```
 ├── models/             # Folder berisi file model .pkl
 │   ├── knn_model.pkl
 │   ├── label_encoders.pkl
@@ -47,14 +47,12 @@ FitPlan AI adalah aplikasi web yang dibangun dengan Streamlit untuk membantu pen
 ├── media.py            # Script Python untuk mapping nama item ke path gambar
 ├── media_info.py       # Script Python berisi detail (deskripsi, tips, youtube)
 ├── requirements.txt    # Daftar library Python yang dibutuhkan
-├── logo.jpg            # File logo aplikasi├── landing.jpg         # (Opsional) Gambar untuk halaman awal
+├── logo.jpg            # File logo aplikasi
 └── README.md    
-
+```
 ---
 
 ## 🚀 Menjalankan Secara Lokal
-
-Pastikan Anda sudah menginstal Python (disarankan versi 3.9+).
 
 1.  **Clone Repository:**
     ```bash
@@ -75,13 +73,11 @@ Pastikan Anda sudah menginstal Python (disarankan versi 3.9+).
     ```bash
     pip install -r requirements.txt
     ```
-    *(Pastikan file `requirements.txt` berisi: `streamlit`, `pandas`, `joblib`, `Pillow`, `requests`, `scikit-learn`)*
 
 4.  **Jalankan Aplikasi Streamlit:**
     ```bash
     streamlit run app.py
     ```
-    Aplikasi akan terbuka otomatis di browser Anda.
 
 ---
 
